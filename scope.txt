@@ -1,0 +1,17 @@
+night writer needs to:
+
+read a file of alphanumeric characters
+parse those characters into three line arrays
+match each character to a braille character in a nested array
+  of three lines in a hash (iteration)
+check for output File
+create if it doesn't exist
+print the first nested hash keys
+end line
+print second nested hash keys
+end line
+print third nested hash keys
+
+files needed
+1. file_writer and tests
+2. file_reader and tests
