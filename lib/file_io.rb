@@ -1,4 +1,5 @@
 class FileIO
+  attr_reader :read, :write_text
   def read (filename = ARGV[0])
     File.read(filename)
   end
