@@ -73,8 +73,8 @@ class NightWriter
   end
 
   def encode_file_to_braille(string)
-    string.strip.split(//).map do
-      |letter| @braille << @alphabet[letter]
+    string.strip.split(//).map do |letter|
+      @braille << @alphabet[letter]
     end
   end
 end
