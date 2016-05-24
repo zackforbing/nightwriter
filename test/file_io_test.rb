@@ -2,7 +2,7 @@ require 'minitest/autorun'
 require 'minitest/nyan_cat'
 require_relative '../lib/file_io'
 
-class NightWriterIOTest < Minitest::Test
+class FileIOTest < Minitest::Test
   attr_reader :file_io
 
   def setup
@@ -13,14 +13,14 @@ class NightWriterIOTest < Minitest::Test
     assert_equal "test\n", @file_io.read("test.txt")
   end
 
+  def test_reader_reads_braille
+    assert_equal "0.\n..\n..\n", @file_io.read("braille_test.txt")
+  end
+
   def test_writer_can_write
     @file_io = FileIO.new
     @file_io.write_text("test_write.txt", "test")
     assert_equal "test", @file_io.read("test_write.txt")
-  end
-
-  def test_reader_reads_braille
-    assert_equal "0.\n..\n..\n", @file_io.read("braille_test.txt")
   end
 
   def test_writer_writes_braille

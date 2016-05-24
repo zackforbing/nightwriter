@@ -1,6 +1,9 @@
-class Dictionary
-  def alphabet
-    {"a" => ["0.", "..", ".."],
+class Converter
+
+  def initialize
+    @english = []
+    @braille = []
+    @alphabet = {"a" => ["0.", "..", ".."],
     "b" => ["0.", "0.", ".."],
     "c" => ["00", "..", ".."],
     "d" => ["00", ".0", ".."],
@@ -53,5 +56,19 @@ class Dictionary
     "that" => [".0", "00", "0."],
     " " => ["..", "..", ".."]
   }
-end
+  end
+
+  def create_top_line(string)
+    @english.push(string)
+    @alphabet["a"][0]
+  end
+
+  def create_middle_line(string)
+    @english.push(string)
+    @alphabet["a"][1]
+  end
+
+  def create_bottom_line
+
+  end
 end
