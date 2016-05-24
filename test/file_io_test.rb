@@ -1,6 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/nyan_cat'
-require_relative '../lib/file_io'
+require_relative '../lib/night_writer'
 
 class FileIOTest < Minitest::Test
   attr_reader :file_io

@@ -1,4 +1,18 @@
-class Converter
+class FileIO
+  attr_reader :read, :write_text
+
+  def read (filename = ARGV[0])
+    File.read(filename)
+  end
+
+  def write_text(filename = ARGV[1], text)
+    output_file = File.open(filename, 'w')
+    output_file.write(text)
+    output_file.close
+  end
+end
+
+class NightWriter
 
   def initialize
     @english = []
@@ -58,17 +72,9 @@ class Converter
   }
   end
 
-  def create_top_line(string)
-    @english.push(string)
-    @alphabet["a"][0]
-  end
-
-  def create_middle_line(string)
-    @english.push(string)
-    @alphabet["a"][1]
-  end
-
-  def create_bottom_line
-
+  def encode_file_to_braille(string)
+    string.strip.split(//).map do
+      |letter| @braille << @alphabet[letter]
+    end
   end
 end
