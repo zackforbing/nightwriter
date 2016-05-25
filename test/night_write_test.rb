@@ -1,12 +1,12 @@
 require 'minitest/autorun'
 require 'minitest/nyan_cat'
-require './lib/night_writer'
+require './lib/night_write'
 
-class FileIOTest < Minitest::Test
+class NightWriteTest < Minitest::Test
   attr_reader :file_io
 
   def setup
-    @file_io = FileIO.new
+    @file_io = NightWrite.new
   end
 
   def test_reader_can_read
@@ -18,7 +18,6 @@ class FileIOTest < Minitest::Test
   end
 
   def test_writer_can_write
-    @file_io = FileIO.new
     @file_io.write_text("./test/test_write.txt", "test")
     assert_equal "test", @file_io.read("./test/test_write.txt")
   end

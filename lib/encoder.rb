@@ -1,21 +1,6 @@
-class FileIO
-  attr_reader :read, :write_text
-
-  def read (filename = ARGV[0])
-    File.read(filename)
-  end
-
-  def write_text(filename = ARGV[1], text)
-    output_file = File.open(filename, 'w')
-    output_file.write(text)
-    output_file.close
-  end
-end
-
-class NightWriter
+class Encoder
 
   def initialize
-    @english = []
     @braille = []
     @alphabet = {"a" => ["0.", "..", ".."],
     "b" => ["0.", "0.", ".."],
@@ -72,9 +57,21 @@ class NightWriter
   }
   end
 
-  def encode_file_to_braille(string)
-    string.strip.split(//).map do |letter|
-      @braille << @alphabet[letter]
-    end
+  def text_to_braille(string)
+    # find_capitals(string)
+    @braille = string.strip.chars.map { |letter| @alphabet[letter] }
+    @braille.transpose.each { |array| array << "\n" }.join
   end
+
+  # private
+  #
+  # def find_capitals(string)
+  #   string.chars.find_all do |thing|
+  #     #code that finds capitals
+  #     #more things that makes them lowercase with a shift in front
+  #     "B"
+  #     array << :SHIFT
+  #     array << thing.lowercase
+  #   end
+  # end
 end
