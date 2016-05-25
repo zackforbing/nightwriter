@@ -12,33 +12,25 @@ class EncoderTest < Minitest::Test
     @file_io = NightWrite.new
     @encoder = Encoder.new
   end
-  #night_write
-  def test_returns_an_array
+
+  def test_return_string
     encoding = @encoder.text_to_braille(@file_io.read("./test/support/a.txt"))
     assert_instance_of String, encoding
   end
 
-  def test_returns_an_array_of_strings
+  def test_returns_a_in_braille
     encoding = @encoder.text_to_braille(@file_io.read("./test/support/a.txt"))
-    assert_instance_of String, encoding[0][0][0]
-  end
-
-  def test_returns_hash_value_of_a
-    encoding = @encoder.text_to_braille(@file_io.read("./test/support/a.txt"))
-    assert ["0.", "..", ".."], encoding[0][0]
+    assert_equal "0.\n..\n..\n", encoding
   end
 
   def test_returns_two_braille_letters
     encoding = @encoder.text_to_braille(@file_io.read("./test/support/ab.txt"))
-    assert [["0.", "..", ".."],["0.", "0.", ".."]], encoding
+    assert_equal "0.0.\n..0.\n....\n", encoding
   end
 
-  def test_returns_hello_world_in_array
+  def test_returns_hello_world_in_braille
     encoding = @encoder.text_to_braille(@file_io.read("./test/support/hello_world.txt"))
-    assert [["0.", "00", ".."],["0.", ".0", ".."],["0.", "0.", "0."],
-    ["0.", "0.", "0."],["0.", ".0", "0."],["..", "..", ".."],[".0", "00", ".0"],
-    ["0.", ".0", "0."],["0.", "00", "0."],["0.", "0.", "0."],["00", ".0", ".."],
-    ["..", "00", "0."]], encoding
+    assert_equal "0.0.0.0.0......00.0.0.00..\n00.00.0..00...00.0000..000\n....0.0.0......00.0.0...0.\n", encoding
   end
 
   def test_prints_braille_to_file
@@ -50,32 +42,24 @@ class EncoderTest < Minitest::Test
     assert_equal HELLO_WORLD, File.read(output_file)
   end
   #night_read
-  def test_returns_an_array
-    encoding = @encoder.braille_to_text(@file_io.read("./test/support/a.txt"))
+  def test_returns_an_english_string
+    encoding = @encoder.braille_to_text(@file_io.read("./test/support/a_braille.txt"))
     assert_instance_of String, encoding
   end
 
-  def test_returns_an_array_of_strings
-    encoding = @encoder.braille_to_text(@file_io.read("./test/support/a.txt"))
-    assert_instance_of String, encoding[0][0][0]
+  def test_returns_a
+    encoding = @encoder.braille_to_text(@file_io.read("./test/support/a_braille.txt"))
+    assert_equal "a", encoding
   end
 
-  def test_returns_hash_value_of_a
-    encoding = @encoder.braille_to_text(@file_io.read("./test/support/a.txt"))
-    assert ["0.", "..", ".."], encoding[0][0]
+  def test_returns_two_letters
+    encoding = @encoder.braille_to_text(@file_io.read("./test/support/ab_braille.txt"))
+    assert_equal "ab", encoding
   end
 
-  def test_returns_two_braille_letters
-    encoding = @encoder.braille_to_text(@file_io.read("./test/support/ab.txt"))
-    assert [["0.", "..", ".."],["0.", "0.", ".."]], encoding
-  end
-
-  def test_returns_hello_world_in_array
-    encoding = @encoder.braille_to_text(@file_io.read("./test/support/hello_world.txt"))
-    assert [["0.", "00", ".."],["0.", ".0", ".."],["0.", "0.", "0."],
-    ["0.", "0.", "0."],["0.", ".0", "0."],["..", "..", ".."],[".0", "00", ".0"],
-    ["0.", ".0", "0."],["0.", "00", "0."],["0.", "0.", "0."],["00", ".0", ".."],
-    ["..", "00", "0."]], encoding
+  def test_returns_hello_world_in_text
+    encoding = @encoder.braille_to_text(@file_io.read("./test/support/braillo_world.txt"))
+    assert_equal "hello, world!", encoding
   end
 
   def test_prints_text_to_file
