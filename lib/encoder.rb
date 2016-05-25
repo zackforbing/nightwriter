@@ -1,8 +1,9 @@
 class Encoder
-  attr_reader :braille, :alphabet, :numbers
+  attr_reader :braille, :english, :alphabet, :numbers
 
   def initialize
     @braille = []
+    @english = []
     @alphabet = {
       "a" => ["0.", "..", ".."], "b" => ["0.", "0.", ".."],
       "c" => ["00", "..", ".."], "d" => ["00", ".0", ".."],
@@ -41,19 +42,22 @@ class Encoder
   end
 
   def text_to_braille(string)
-    # find_capitals(string)
-    braille = string.strip.chars.map do|char|
-      if numbers.keys.include?(char)
-        braille.insert(braille.index {|x| (x == char)}  - 1, alphabet["#"]) #not complete, need to find next index
-        number[char]
-      else
-        alphabet[char]
-      end
-    end
-    binding.pry
+    string.strip.chars.map { |char| braille << alphabet[char]}
+    # if numbers.keys.include?(char)
+    #   number[char]
+    # else
+    # braille << alphabet[char]
+    # end braille.insert(index[char] -1, alphabet["#"])
     braille.transpose.each { |array| array << "\n" }.join
   end
 
+  def braille_to_text(string)
+    braille = string.split.map do
+      |ary| ary.chars.each_slice(2).map(&:join)
+    end
+    braille.transpose.map { |sym| english << alphabet.invert[sym]}
+    english.join
+  end
   # private
   #
   # def find_capitals(string)

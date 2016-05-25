@@ -2,7 +2,6 @@ require "./lib/encoder"
 class NightWrite
   attr_reader :read, :write_text
 
-#have to refactor so this test works
   def read (filename = ARGV[0])
     File.read(filename)
   end
@@ -19,10 +18,5 @@ class NightWrite
     message = encoder.text_to_braille(text)
     write_text(ARGV[1], message)
     puts "Created '#{ARGV[1].split("/").last}' containing #{message.length} characters"
-  end
-
-  if __FILE__ == $PROGRAM_NAME
-    file = NightWrite.new
-    file.encode
   end
 end
