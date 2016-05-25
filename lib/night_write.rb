@@ -16,7 +16,7 @@ class NightWrite
   def encode(filename = ARGV[0])
     text = read(filename)
     encoder = Encoder.new
-    message = encoder.encode_file_to_braille(text)
+    message = encoder.text_to_braille(text)
     write_text(ARGV[1], message)
     puts "Created '#{ARGV[1].split("/").last}' containing #{message.length} characters"
   end

@@ -53,6 +53,5 @@ class EncoderTest < Minitest::Test
     file_io = NightWrite.new
     file_io.encode
     assert_equal BRAILLE_TEXT, File.read(output_file)
-    #assert that the braille file is encoded as expected.
   end
 end
