@@ -20,3 +20,8 @@ class NightWrite
     puts "Created '#{ARGV[1].split("/").last}' containing #{message.length} characters"
   end
 end
+
+if __FILE__ == $PROGRAM_NAME
+  file = NightWrite.new
+  file.encode
+end

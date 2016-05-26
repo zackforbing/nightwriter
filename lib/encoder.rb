@@ -23,15 +23,7 @@ class Encoder
       "," => ["..", "0.", ".."], "-" => ["..", "..", "00"],
       "." => ["..", "00", ".0"], "?" => ["..", "0.", "00"],
       :shift => ["..", "..", ".0"], "#" => [".0", ".0", "00"],
-      " " => ["..", "..", ".."], # "but" => ["0.", "0.", ".."]
-      # "can" => ["00", "..", ".."], "do" => ["00", ".0", ".."],
-      # "every" => ["0.", ".0", ".."], "from" => ["00", "0.", ".."],
-      # "go" => ["00", "00", ".."], "have" => ["0.", "00", ".."],
-      # "just" => [".0", "00", ".."], "knowledge" => ["0.", "..", "0."],
-      # "like" => ["0.", "0.", "0."], "more" => ["00", "..", "0."],
-      # "not" => ["00", ".0", "0."], "people" => ["00", "0.", "0."],
-      # "quite" => ["00", "00", "0."], "rather" => ["0.", "00", "0."],
-      # "so" => [".0", "0.", "0."], "that" => [".0", "00", "0."]
+      " " => ["..", "..", ".."]
     }
     @numerals = {
       "1" => ["0.", "..", ".."], "2" => ["0.", "0.", ".."],
@@ -48,24 +40,17 @@ class Encoder
       braille << alphabet[:shift] unless char == char.downcase
       braille << alphabet[char.downcase]
     end
-
-    #   number[char]
-    # else
-    # braille << alphabet[char]
-    # end braille.insert(index[char] -1, alphabet["#"])
     last_braille = []
     braille.transpose.map { |ary| last_braille << ary.join }
     line_end(last_braille).join("\n")
   end
 
   def braille_to_text(string)
-    braille = break_fix(string.split)
-    binding.pry
-    braille.map do |ary|
-      ary.chars.each_slice(2).map(&:join)
+    braille = string.split.each_slice(3).to_a
+    lines = braille.transpose.map do |ary|
+      ary.join.chars.each_slice(2).map(&:join)
     end
-    braille = braille
-    braille.each do |sym|
+    lines.transpose.each do |sym|
       english << alphabet.invert[sym]
     end
     find_shifts(english).join
@@ -90,14 +75,5 @@ class Encoder
       x -= 80
     end
     new_lines
-    # binding.pry
-  end
-
-  def break_fix(array) #needs fixed
-    if array.count > 3
-      array[0] = array[2].concat(array.last)
-      array[1] = array[1].concat(array.last)
-      array[0] = array[0].concat(array.last)
-    end
   end
 end
