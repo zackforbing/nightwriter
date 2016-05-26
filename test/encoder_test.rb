@@ -23,9 +23,19 @@ class EncoderTest < Minitest::Test
     assert_equal "0.\n..\n..\n", encoding
   end
 
+  def test_returns_capital_A_in_braille
+    encoding = @encoder.text_to_braille(@file_io.read("./test/support/capsA.txt"))
+    assert_equal "..0.\n....\n.0..\n", encoding
+  end
+
   def test_returns_two_braille_letters
     encoding = @encoder.text_to_braille(@file_io.read("./test/support/ab.txt"))
     assert_equal "0.0.\n..0.\n....\n", encoding
+  end
+
+  def test_returns_two_uppercase_braille_letters
+    encoding = @encoder.text_to_braille(@file_io.read("./test/support/capsAB.txt"))
+    assert_equal "..0...0.\n......0.\n.0...0..\n", encoding
   end
 
   def test_returns_hello_world_in_braille
@@ -47,6 +57,11 @@ class EncoderTest < Minitest::Test
     assert_instance_of String, encoding
   end
 
+  def test_returns_capital_A
+    encoding = @encoder.braille_to_text(@file_io.read("./test/support/capsA_braille.txt"))
+    assert_equal "A", encoding
+  end
+
   def test_returns_a
     encoding = @encoder.braille_to_text(@file_io.read("./test/support/a_braille.txt"))
     assert_equal "a", encoding
@@ -55,6 +70,11 @@ class EncoderTest < Minitest::Test
   def test_returns_two_letters
     encoding = @encoder.braille_to_text(@file_io.read("./test/support/ab_braille.txt"))
     assert_equal "ab", encoding
+  end
+
+  def test_returns_two_uppercase_letters
+    encoding = @encoder.braille_to_text(@file_io.read("./test/support/capsAB_braille.txt"))
+    assert_equal "AB", encoding
   end
 
   def test_returns_hello_world_in_text

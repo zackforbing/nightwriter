@@ -42,7 +42,11 @@ class Encoder
   end
 
   def text_to_braille(string)
-    string.strip.chars.map { |char| braille << alphabet[char]}
+
+    string.strip.chars.map do |char|
+      braille << alphabet[:shift] unless char == char.downcase
+      braille << alphabet[char.downcase]
+    end
     # if numbers.keys.include?(char)
     #   number[char]
     # else
@@ -52,21 +56,22 @@ class Encoder
   end
 
   def braille_to_text(string)
-    braille = string.split.map do
-      |ary| ary.chars.each_slice(2).map(&:join)
+    braille = string.split.map do |ary|
+      ary.chars.each_slice(2).map(&:join)
     end
-    braille.transpose.map { |sym| english << alphabet.invert[sym]}
-    english.join
+    braille.transpose.map  do |sym|
+      english << alphabet.invert[sym]
+    end
+    find_shifts(english).join
   end
-  # private
-  #
-  # def find_capitals(string)
-  #   string.chars.find_all do |thing|
-  #     #code that finds capitals
-  #     #more things that makes them lowercase with a shift in front
-  #     "B"
-  #     array << :SHIFT
-  #     array << thing.lowercase
-  #   end
-  # end
+
+  def find_shifts(ary)
+    # look through array for shift objects, remove them, and capitalize the next letter
+    ary.each_with_index do |char, index|
+      if char == :shift
+        ary.delete_at(index)
+        ary[index] = ary[index].upcase
+      end
+    end
+  end
 end
