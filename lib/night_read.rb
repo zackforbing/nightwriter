@@ -3,7 +3,7 @@ require './lib/night_write'
 class NightRead < NightWrite
 
   def encode(filename = ARGV[0])
-    braille = read(filename)
+    braille = read(filename).chomp
     encoder = Encoder.new
     message = encoder.braille_to_text(braille)
     write_text(ARGV[1], message)
